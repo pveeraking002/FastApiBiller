@@ -4,6 +4,7 @@ from CustomerBlock.customer import Customer
 from Connector.connector import create_db_pool
 from Models.customerModel import Base
 from requestModel.customerRequest import CustomerData 
+from fastapi.middleware.cors import CORSMiddleware
 
 db_pool = None
 
@@ -21,7 +22,15 @@ async def Dbs(lifespan:FastAPI):
 
 app = FastAPI(lifespan=Dbs)
 
+origins = ["*"]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def indexPage():
