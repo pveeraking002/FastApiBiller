@@ -18,5 +18,7 @@ class ProductsRequestModel(BaseModel):
     totalStock:int
     createdBy:str
     expired:datetime
-    noofDays:int
+    #noofDays:int
+    barcode:int
+
 

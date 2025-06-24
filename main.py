@@ -77,4 +77,18 @@ async def postProduct(request:ProductsRequestModel):
     json_data = StockManagement().insertStock(request)
     return json_data 
 
+@app.patch("/updateproduct")
+async def updateProduct(request:ProductsRequestModel):
+    json_data = StockManagement().updateStock(request)
+    return json_data
+
+@app.delete("/deleteproduct/{barcode}")
+async def deleteProduct(barcode:int):
+    json_data = StockManagement().deleteProduct(barcode)
+    return json_data
+
+@app.get("/product/{barcode}")
+async def getProductUsingBarcode(barcode:int):
+    json_data = StockManagement().getProductUsingBarcode(barcode)
+    return json_data
 #End Stock api 

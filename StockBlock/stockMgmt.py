@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import text
 from Utilities.util import getAlldata,postData
 from requestModel.StockRequest import StockUniqueList
@@ -25,18 +26,61 @@ class StockManagement:
 
     def insertStock(self,request):
         print("Entering into Inserting prodcct")
+        print(request.expired)
+        format_string = "%Y-%m-%d %H:%M:%S"
+        expDate= datetime.strptime(str(request.expired),format_string) 
+        createdDate = datetime.strptime(str(request.createdDate),format_string)
+        diff_days:int = (expDate-createdDate).days
+        print(diff_days)
         query = '''
-        INSERT INTO stocks ("productName","subProduct","Qty","Price","gross","createdDate","inStock","outStock","totalStock","createdBy","expired","noofDays")
-        VALUES('{pname}','{sub}',{qty},{price},{gross},DATE '{cdate}',{instock},{outstock},{totalstock},'{updatedby}',DATE '{exp}',{nod});
+        INSERT INTO stocks ("productName","subProduct","Qty","Price","gross","createdDate","inStock","outStock","totalStock","createdBy","expired","noofDays","barcode")
+        VALUES('{pname}','{sub}',{qty},{price},{gross},DATE '{cdate}',{instock},{outstock},{totalstock},'{updatedby}',DATE '{exp}',{nod},{barcode});
         '''.format(pname = request.productName, sub=request.subProduct, qty = request.Qty, price=request.Price,
                    gross=request.gross, cdate=request.createdDate, instock=request.inStock, outstock=request.outStock,
-                    totalstock=request.totalStock, updatedby=request.createdBy, exp=request.expired, nod= request.noofDays)
+                    totalstock=request.totalStock, updatedby=request.createdBy, exp=request.expired, nod=diff_days, barcode=request.barcode)
         print(text(query))
         data = postData(query)
         return {"data":data}
     
+    def __getStockDetails(self,pid,stk,clmName)->int:
+        return int(getAlldata(f'''select "{clmName}" from stocks where barcode={pid}''')[0][0]) + int(stk)
 
-
-
-
+    def updateStock(self,request):
+        print("Entering into the updateStock")
+        pid = int(request.barcode)
+        fetchQry = f'''
+        select count("barcode") from stocks where barcode={pid}
+        '''
+        if getAlldata(fetchQry)[0][0] > 0:
+            instockData = self.__getStockDetails(pid,request.inStock,"inStock")
+            updateQry = '''
+            update stocks set "productName"='{pname}',"subProduct"='{sub}',"Qty"={qty},"Price"={price},"gross"={gross},"createdDate"=DATE'{cdate}',"inStock"={instock},
+            "createdBy"='{updatedby}' where "barcode" = {barcode}
+            '''.format(pname=request.productName,sub=request.subProduct, qty = request.Qty, price=request.Price,
+                   gross=request.gross, cdate=request.createdDate,instock=instockData,
+                    totalstock=request.totalStock, updatedby=request.createdBy,barcode = request.barcode)
+            print(updateQry)
+            data = postData(updateQry)
+            return {"data":data}
+        else:
+            print("Error: Could not find the product under the Barcode")
+            return {"data":None}    
     
+    def deleteProduct(self,barcode):
+        print("Entering into the Delete function")
+        deleteQry = f'''DELETE FROM stocks where barcode={barcode}'''
+        data = postData(deleteQry)
+        return {"data":data}
+    
+    def getProductUsingBarcode(self,barcode):
+        print("Entering the function to get the product using Barcode")
+        prQuery = f'''
+        select * from stocks where barcode={barcode} limit 1
+        '''
+        data = getAlldata(prQuery)
+        return {"product":data}
+    
+
+
+
+
