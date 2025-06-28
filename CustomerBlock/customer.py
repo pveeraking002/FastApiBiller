@@ -25,9 +25,9 @@ class Customer:
         print("inside the addCustomer Block")
         print(request.cname)
         query = '''
-        INSERT INTO "customers" (id,"cname","mobile","email","address","company")
-        VALUES({id},'{cname}','{mobile}','{email}','{address}','{company}')
-        '''.format(id=request.id, cname=request.cname, mobile=request.mobile, email=request.email, address=request.address, company=request.company)
+        INSERT INTO "customers" ("cname","mobile","email","address","company")
+        VALUES('{cname}','{mobile}','{email}','{address}','{company}')
+        '''.format(cname=request.cname, mobile=request.mobile, email=request.email, address=request.address, company=request.company)
         data = postData(query)
         return {"data":data}
     

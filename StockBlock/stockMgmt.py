@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import text
 from Utilities.util import getAlldata,postData
-from requestModel.StockRequest import StockUniqueList
+from requestModel.StockRequest import StockUniqueList,ProductUsingSerial
 
 class StockManagement:
     _stkInstance = None
@@ -75,9 +75,10 @@ class StockManagement:
     def getProductUsingBarcode(self,barcode):
         print("Entering the function to get the product using Barcode")
         prQuery = f'''
-        select * from stocks where barcode={barcode} limit 1
+        select "id","barcode","productName","subProduct" from stocks where barcode={barcode} 
         '''
-        data = getAlldata(prQuery)
+        data = [ProductUsingSerial(id=x[0],barcode=x[1], productName=x[2], subProduct=x[3]) for x in getAlldata(prQuery)]
+        print(data)
         return {"product":data}
     
 

@@ -22,3 +22,10 @@ class ProductsRequestModel(BaseModel):
     barcode:int
 
 
+class ProductUsingSerial(BaseModel):
+    id:int
+    barcode:int 
+    productName:str
+    subProduct:str
+
+

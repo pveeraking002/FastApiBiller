@@ -89,6 +89,7 @@ async def deleteProduct(barcode:int):
 
 @app.get("/product/{barcode}")
 async def getProductUsingBarcode(barcode:int):
+    print("barcode",barcode)
     json_data = StockManagement().getProductUsingBarcode(barcode)
     return json_data
 #End Stock api 
