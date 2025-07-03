@@ -1,12 +1,11 @@
 import sqlalchemy
-from sqlalchemy.orm import sessionmaker
-
+from config.config import CONNECT_DB_URL
 def create_db_pool():
     pool = None
     try:
         if pool == None:
             print("Enter into the pool function",pool)
-            DB_URL = "postgresql://postgres:postgres@db:5432/biller"
+            DB_URL = CONNECT_DB_URL
             pool = sqlalchemy.create_engine(DB_URL)
             #sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=pool)
             print("pool Created")

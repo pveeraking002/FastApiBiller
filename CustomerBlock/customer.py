@@ -19,7 +19,6 @@ class Customer:
         cusData = [CustomerData(id=x[0], cname=x[1],mobile=x[2], email=x[3], address=x[4], company=x[5]) for x in data]
         return {"customers":cusData}
     
-    #The Show - Jake Daniels (LYRICS)
 
     def addCustomer(self,request):
         print("inside the addCustomer Block")

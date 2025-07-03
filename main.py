@@ -8,6 +8,9 @@ from Models.stockModel import StockBase
 from requestModel.StockRequest import ProductsRequestModel, StockUniqueList
 from requestModel.customerRequest import CustomerData 
 from fastapi.middleware.cors import CORSMiddleware
+#from config.config import CLIENT_ID,CLIENT_SECRET
+#from starlette.middleware.sessions import SessionMiddleware
+#from authlib.integrations.base_client import OAuthError, BaseOAuth
 
 db_pool = None
 
@@ -25,6 +28,17 @@ async def Dbs(lifespan:FastAPI):
 
 
 app = FastAPI(lifespan=Dbs)
+'''
+app.add_middleware(SessionMiddleware,secret_key="")
+
+oauth = BaseOAuth()
+oauth.register(name='google',server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
+               ,client_id=CLIENT_ID
+               ,client_secret=CLIENT_SECRET,client_kwargs={
+                   "scope": 'email openid profile',
+                   "redirect_url": 'http://localhost:8000/auth'
+               })
+'''
 
 origins = ["*"]
 
@@ -35,6 +49,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+#login phase 
+@app.get("/login")
+async def loginPage(request:Request):
+   pass
+@app.get("auth")
+async def authFunction():
+   pass
+#End login Phase 
 
 @app.get("/")
 def indexPage():
