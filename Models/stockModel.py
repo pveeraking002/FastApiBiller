@@ -7,7 +7,7 @@ StockBase = declarative_base()
 class StockModel(StockBase):
     __tablename__= "stocks"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     productName = Column(String)
     subProduct = Column(String)
     Qty = Column(Integer)
