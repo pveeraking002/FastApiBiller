@@ -1,6 +1,7 @@
 from sqlalchemy import Column,Integer,Text,String
 from  sqlalchemy.ext.declarative import declarative_base
 
+
 Base = declarative_base()
 
 class CustomerModel(Base):
@@ -15,3 +16,5 @@ class CustomerModel(Base):
     company = Column(String)
 
 
+
+#insert into customers ("cname","mobile","email","address","company") values ('veera','9688994268','p.veeraking002@hotmail.com','14 test street', 'nil');

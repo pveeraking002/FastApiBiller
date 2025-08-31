@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-ENV PYTHONUNBUFFERED True 
+ENV PYTHONUNBUFFERED = True
 
 WORKDIR /usr/src/app
 
