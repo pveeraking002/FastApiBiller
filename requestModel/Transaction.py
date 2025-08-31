@@ -11,6 +11,13 @@ class TransactionRequestModel(BaseModel):
     discount:float
     net:float 
     createdBy:str | None 
+    company:str | None
 
 
 
+
+class GetTransactionBody(BaseModel):
+    createdDate:str
+    customerId:str #getting the customer form the customer Table 
+    productName:str 
+    qty:str
