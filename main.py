@@ -129,4 +129,10 @@ async def postTransaction(request:TransactionRequestModel):
     print("inside the Transaction block")
     json_data = TransactionsBlock().postTransactions(request=request)
     return json_data
+
+@app.get('/getTransactions',status_code=status.HTTP_200_OK)
+async def getAllTransactions():
+    json_data  = TransactionsBlock().getTransactions()
+    return json_data
+
 #End of Transaction api 
