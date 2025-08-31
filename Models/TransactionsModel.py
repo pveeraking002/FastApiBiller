@@ -24,3 +24,10 @@ class Transactions(TransactionsBase):
 
 
 
+
+    #INSERT INTO Transactions("createdDate","customerId","productName","qty","price","gross","discount","net","createdBy","company)VALUES(20-05-1991,123,'AC',10,20.0,20.0,0.0,20.0,'Veera','veera Industries') 
+
+
+
+
+
