@@ -1,12 +1,14 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI,Request
+from fastapi import FastAPI,Request,status
 from CustomerBlock.customer import Customer
 from StockBlock.stockMgmt import StockManagement
 from Connector.connector import create_db_pool
 from Models.customerModel import Base
 from Models.stockModel import StockBase
+from Models.TransactionsModel import TransactionsBase
 from requestModel.StockRequest import ProductsRequestModel, StockUniqueList
 from requestModel.customerRequest import CustomerData 
+from requestModel.Transaction import TransactionRequestModel
 from fastapi.middleware.cors import CORSMiddleware
 #from config.config import CLIENT_ID,CLIENT_SECRET
 #from starlette.middleware.sessions import SessionMiddleware
@@ -21,6 +23,7 @@ async def Dbs(lifespan:FastAPI):
         db_pool = create_db_pool()
         Base.metadata.create_all(bind=db_pool)
         StockBase.metadata.create_all(bind=db_pool)
+        TransactionsBase.metadata.create_all(bind=db_pool)
         print("checking Connections")
         yield
         db_pool.dispose()
@@ -116,3 +119,14 @@ async def getProductUsingBarcode(barcode:int):
     json_data = StockManagement().getProductUsingBarcode(barcode)
     return json_data
 #End Stock api 
+
+
+#start transaction api 
+from TransBlock.transactionsBlock import TransactionsBlock
+
+@app.post('/transaction',status_code = status.HTTP_201_CREATED)
+async def postTransaction(request:TransactionRequestModel):
+    print("inside the Transaction block")
+    json_data = TransactionsBlock().postTransactions(request=request)
+    return json_data
+#End of Transaction api 
