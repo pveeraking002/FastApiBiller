@@ -21,3 +21,5 @@ class GetTransactionBody(BaseModel):
     customerId:str #getting the customer form the customer Table 
     productName:str 
     qty:str
+    customer:dict | None 
+
