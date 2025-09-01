@@ -1,6 +1,8 @@
 from requestModel.Transaction import TransactionRequestModel,GetTransactionBody
 from datetime import datetime
 from Utilities.util import getAlldata,postData
+from requestModel.customerRequest import CustomerData
+from CustomerBlock.customer import Customer
 
 
 class TransactionsBlock:
@@ -23,12 +25,13 @@ class TransactionsBlock:
         getAllTransactionQuery = '''
             select * from "transactions";
         ''' 
-        data = [GetTransactionBody(createdDate=str(dt[0]),
-                                   customerId=str(dt[1]),
-                                   productName=str(dt[2]),
-                                   qty=str(dt[3]
-                                           ))for dt in getAlldata(getAllTransactionQuery)]
-        print(data)
+        data = [GetTransactionBody(createdDate=str(dt[1]),
+                                   customerId=str(dt[2]),
+                                   productName=str(dt[3]),
+                                   qty=str(dt[4]),
+                                   customer = Customer().getCustomersById(dt[2]))for dt in getAlldata(getAllTransactionQuery)]     
+        
+        #print(data)
         return {"result":data} 
 
     def __BackgroundPostTransactions(self,request):

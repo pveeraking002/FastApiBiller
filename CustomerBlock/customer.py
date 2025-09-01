@@ -17,6 +17,14 @@ class Customer:
         data = getAlldata(query)
         #, mobile=x[2], email=x[3], address=x[4], company=x[5]
         cusData = [CustomerData(id=x[0], cname=x[1],mobile=x[2], email=x[3], address=x[4], company=x[5]) for x in data]
+        return cusData
+    
+    def getCustomersById(self,cusId):
+        print(cusId)
+        query = '''select * from "customers" where id={id};'''.format(id=cusId)
+        data = getAlldata(query)
+        #, mobile=x[2], email=x[3], address=x[4], company=x[5]
+        cusData = [CustomerData(id=x[0], cname=x[1],mobile=x[2], email=x[3], address=x[4], company=x[5]) for x in data]
         return {"customers":cusData}
     
 
