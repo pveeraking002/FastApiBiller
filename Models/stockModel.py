@@ -22,9 +22,9 @@ class StockModel(StockBase):
     noofDays = Column(Integer)
 
 '''
-INSERT INTO stocks ("productName","subProduct","Qty","Price","gross","createdDate","inStock","outStock","totalStock","createdBy","expired","noofDays") VALUES('product1','AC',4,20.00,20.00,'20/05/1991',10,2,12,'veera','20/05/1991',20);
+    INSERT INTO stocks ("productName","subProduct","Qty","Price","gross","createdDate","inStock","outStock","totalStock","createdBy","expired","noofDays") VALUES('product1','AC',4,20.00,20.00,'20/05/1991',10,2,12,'veera','20/05/1991',20);
 
-NSERT INTO stocks (productName,subProduct,Qty,Price,gross,createdDate,inStock,outStock,totalStock,createdBy,expired,noofDays) VALUES('product1','AC',4,20.00,20.00,'20/05/1991',10,2,12,'veera','20/05/1991',20);
+    NSERT INTO stocks (productName,subProduct,Qty,Price,gross,createdDate,inStock,outStock,totalStock,createdBy,expired,noofDays) VALUES('product1','AC',4,20.00,20.00,'20/05/1991',10,2,12,'veera','20/05/1991',20);
 
-INSERT INTO stocks ("productName","subProduct","Qty","Price","gross","createdDate","inStock","outStock","totalStock","createdBy","expired","noofDays") VALUES('product1','AC',4,20.00,20.00,DATE '2015-05-16',10,2,12,'veera',DATE '2015-05-16',20);
+    INSERT INTO stocks ("productName","subProduct","Qty","Price","gross","createdDate","inStock","outStock","totalStock","createdBy","expired","noofDays") VALUES('product1','AC',4,20.00,20.00,DATE '2015-05-16',10,2,12,'veera',DATE '2015-05-16',20);
 '''
