@@ -135,4 +135,10 @@ async def getAllTransactions():
     json_data  = TransactionsBlock().getTransactions()
     return json_data
 
+@app.get('/getTransactionsById/{cusId}',status_code=status.HTTP_200_OK)
+async def getAllTransactionsByCustomerId(cusId:int):
+    print("customerId",cusId)
+    json_data  = TransactionsBlock().getTransactionsById(cusId)
+    return json_data
+
 #End of Transaction api 

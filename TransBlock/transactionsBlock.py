@@ -15,7 +15,10 @@ class TransactionsBlock:
     #public access points     
     def getTransactions(self):
         return self.__BackgroundGetTransactions()
-
+    
+    def getTransactionsById(self,customerId):
+        return self.__BackgroundGetTransactionsById(customerId)
+    
     def postTransactions(self,request):
         return self.__BackgroundPostTransactions(request=request) 
 
@@ -25,14 +28,34 @@ class TransactionsBlock:
         getAllTransactionQuery = '''
             select * from "transactions";
         ''' 
-        data = [GetTransactionBody(createdDate=str(dt[1]),
+        data = [GetTransactionBody(createdDate=str(dt[1]), 
                                    customerId=str(dt[2]),
                                    productName=str(dt[3]),
                                    qty=str(dt[4]),
+                                   price=str(dt[5]),
                                    customer = Customer().getCustomersById(dt[2]))for dt in getAlldata(getAllTransactionQuery)]     
         
         #print(data)
         return {"result":data} 
+    
+    def __BackgroundGetTransactionsById(self,cusId):
+        try:
+            getAllTransactionQuery = '''
+                select * from "transactions" where "customerId"={customerId};
+            '''.format(customerId=cusId)
+            data = [GetTransactionBody(createdDate=str(dt[1]),
+                                    customerId=str(dt[2]),
+                                    productName=str(dt[3]),
+                                    qty=str(dt[4]),
+                                    price=str(dt[5]),
+                                    customer = Customer().getCustomersById(dt[2]))for dt in getAlldata(getAllTransactionQuery)]     
+            
+            #print(data)
+            return {"result":data} 
+        except Exception as ex:
+            print("Getting error in  the data fetching",ex)
+            return {"result":"Error"}
+
 
     def __BackgroundPostTransactions(self,request):
         try:
